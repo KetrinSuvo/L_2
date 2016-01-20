@@ -1,0 +1,33 @@
+#include <tunables/global>
+/usr/bin/lftp {
+#include <abstractions/base>
+#include <abstractions/nameservice>
+
+	#разрешаем самого запуск
+  	/usr/bin/lftp mr,
+
+  	#разрешаем конфиги
+  	/etc/lftp.conf rk,
+  	/etc/inputrc r,
+  	/etc/localtime r,
+	/etc/terminfo/x/xterm r,
+
+	#не даем сливать важную информацию
+	deny @{HOME}/.ssh/ mrwkl,
+	deny @{HOME}/.pki/* mrwkl,
+
+	#в домашнем каталоге тонко нарезаем разрешения согласно логу strace	
+	@{HOME}/.config/lftp/rc r,
+	@{HOME}/.lftprc r,
+	@{HOME}/.local/share/lftp/cwd_history rwk,
+	@{HOME}/.local/share/lftp/rl_history rwk,
+	@{HOME}/.local/share/lftp/transfer_log ra,
+	@{HOME}/.netrc r,
+	/lib/terminfo/x/xterm r,
+	@{HOME}/[^.]* rw,
+	@{HOME}/[^.]*/ rw,
+	@{HOME}/[^.]** rw,
+	@{HOME}/[^.]*/** rw,
+
+	
+}
